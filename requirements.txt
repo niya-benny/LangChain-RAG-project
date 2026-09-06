@@ -1,0 +1,13 @@
+# Core LangChain
+langchain
+langchain-community
+langchain-openai
+
+# Vector store for RAG
+langchain-chroma
+
+# Document loaders / parsers
+pypdf
+pymupdf
+# Environment variables
+python-dotenv
