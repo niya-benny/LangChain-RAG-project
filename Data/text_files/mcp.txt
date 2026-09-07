@@ -1,0 +1,22 @@
+ Model Context Protocol (MCP) is the most popular way to connect agents to tools. In July, the protocol got its largest rewrite since launch. 
+    We've revamped MCP support in LangChain to match the new spec and the growing demand behind it.
+
+Three things have changed:
+
+MCP support moves into the main package. It lives in langchain.mcp now, not a separate langchain-mcp-adapters install.
+It's built on FastMCP. Transports, auth, connection management, and protocol negotiation come from the client underneath, so servers on the old and the new spec both work.
+Elicitation via interrupts and client-side caching are now supported. The new spec turned a server's mid-call elicitation into a retry-able round, which we surface as a LangGraph interrupt. 
+It also made tool lists cacheable, so a tool catalog no longer has to be re-fetched on every run.
+
+The new, stateless spec
+Historically (with the old spec) every MCP call ran through a protocol built around sessions. Calling a tool over MCP used to mean opening a session first. 
+The client and server shook hands, the server handed back a session ID, and every later request had to carry it, which pinned that client to the one server instance that issued it. 
+Running a remote server at any scale meant sticky routing and a shared session store.
+
+This all changed in the new MCP spec, which enabled a stateless core. The MCP team describes the stateless core as one of the most highly-requested features from developers, who wanted better reliability and scalability out of their servers. 
+In the new spec there is nothing left to pin. A redeploy no longer kills live sessions, because there are none.
+That opened up two things, and both are now in langchain.mcp:
+
+Caching: a server can say how long its tool list stays fresh, so clients stop re-fetching it every run.
+Elicitation: a tool can pause to ask the caller something, like confirming a delete or supplying a parameter the model left out, without holding a connection open while it waits.
+Read the MCP team's announcement for more information on the revision
