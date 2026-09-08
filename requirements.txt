@@ -11,3 +11,7 @@ pypdf
 pymupdf
 # Environment variables
 python-dotenv
+
+sentence_transformers
+faiss-cpu
+chromadb
