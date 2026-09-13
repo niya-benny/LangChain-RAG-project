@@ -34,7 +34,7 @@ def load_all_documents(data_dir: str) -> List[Any]:
     for txt_file in txt_files:
         print(f"[DEBUG] Loading TXT: {txt_file}")
         try:
-            loader = TextLoader(str(txt_file))
+            loader = TextLoader(str(txt_file), encoding="utf-8")
             loaded = loader.load()
             print(f"[DEBUG] Loaded {len(loaded)} TXT docs from {txt_file}")
             documents.extend(loaded)
@@ -47,7 +47,7 @@ def load_all_documents(data_dir: str) -> List[Any]:
     for csv_file in csv_files:
         print(f"[DEBUG] Loading CSV: {csv_file}")
         try:
-            loader = CSVLoader(str(csv_file))
+            loader = CSVLoader(str(csv_file), encoding="utf-8")
             loaded = loader.load()
             print(f"[DEBUG] Loaded {len(loaded)} CSV docs from {csv_file}")
             documents.extend(loaded)

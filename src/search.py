@@ -6,7 +6,7 @@ from langchain_groq import ChatGroq
 load_dotenv()
 
 class RAGSearch:
-    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", llm_model: str = "gemma2-9b-it"):
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", llm_model: str = "openai/gpt-oss-20b"):
         self.vectorstore = FaissVectorStore(persist_dir, embedding_model)
         # Load or build vectorstore
         faiss_path = os.path.join(persist_dir, "faiss.index")
@@ -34,6 +34,6 @@ class RAGSearch:
 # Example usage
 if __name__ == "__main__":
     rag_search = RAGSearch()
-    query = "What is attention mechanism?"
+    query = "What is SEO?"
     summary = rag_search.search_and_summarize(query, top_k=3)
     print("Summary:", summary)
